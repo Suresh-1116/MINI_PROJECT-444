@@ -1,0 +1,321 @@
+
+1. Student Information System (using Structures)
+This project will help you practice using structures to store student information (like name, roll number, marks), and perform basic operations like adding, displaying, and searching.
+
+Code:
+
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    int roll_no;
+    char name[50];
+    float marks;
+};
+
+void addStudent(struct Student *s) {
+    printf("Enter Roll Number: ");
+    scanf("%d", &s->roll_no);
+    getchar();  // To consume the newline left by scanf
+    printf("Enter Name: ");
+    fgets(s->name, sizeof(s->name), stdin);
+    s->name[strcspn(s->name, "\n")] = 0;  // Remove the trailing newline character
+    printf("Enter Marks: ");
+    scanf("%f", &s->marks);
+}
+
+void displayStudent(struct Student s) {
+    printf("\nStudent Information:\n");
+    printf("Roll Number: %d\n", s.roll_no);
+    printf("Name: %s\n", s.name);
+    printf("Marks: %.2f\n", s.marks);
+}
+
+int main() {
+    struct Student student;
+    int choice;
+
+    while (1) {
+        printf("\nStudent Information System\n");
+        printf("1. Add Student\n");
+        printf("2. Display Student\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1:
+                addStudent(&student);
+                break;
+            case 2:
+                displayStudent(student);
+                break;
+            case 3:
+                printf("Exiting...\n");
+                return 0;
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    }
+
+    return 0;
+}
+Explanation:
+Structure: A Student structure is used to store roll number, name, and marks.
+Functions: addStudent is used to input student details, and displayStudent displays them.
+Menu: A simple menu allows the user to add and display student information.
+
+
+2. Simple Calculator (using Functions)
+A basic calculator program that performs arithmetic operations (addition, subtraction, multiplication, and division) using functions.
+
+Code:
+#include <stdio.h>
+
+void add(float a, float b) {
+    printf("Result: %.2f\n", a + b);
+}
+
+void subtract(float a, float b) {
+    printf("Result: %.2f\n", a - b);
+}
+
+void multiply(float a, float b) {
+    printf("Result: %.2f\n", a * b);
+}
+
+void divide(float a, float b) {
+    if (b != 0) {
+        printf("Result: %.2f\n", a / b);
+    } else {
+        printf("Error: Division by zero\n");
+    }
+}
+
+int main() {
+    float num1, num2;
+    int choice;
+
+    while (1) {
+        printf("\nSimple Calculator\n");
+        printf("1. Add\n");
+        printf("2. Subtract\n");
+        printf("3. Multiply\n");
+        printf("4. Divide\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 5) {
+            break;
+        }
+
+        printf("Enter two numbers: ");
+        scanf("%f %f", &num1, &num2);
+
+        switch (choice) {
+            case 1:
+                add(num1, num2);
+                break;
+            case 2:
+                subtract(num1, num2);
+                break;
+            case 3:
+                multiply(num1, num2);
+                break;
+            case 4:
+                divide(num1, num2);
+                break;
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+
+    return 0;
+}
+Explanation:
+Functions: The program uses separate functions for each operation.
+Menu: The user can select the desired operation and input two numbers.
+Loop: The program runs in a loop, allowing the user to perform multiple operations until they choose to exit.
+
+
+3. Number Guessing Game
+This is a simple number guessing game where the user has to guess a randomly generated number within a given range.
+
+Code:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int target, guess, attempts = 0;
+    srand(time(0));  // Seed the random number generator
+
+    target = rand() % 100 + 1;  // Random number between 1 and 100
+
+    printf("Welcome to the Number Guessing Game!\n");
+    printf("Guess the number between 1 and 100\n");
+
+    do {
+        printf("Enter your guess: ");
+        scanf("%d", &guess);
+        attempts++;
+
+        if (guess > target) {
+            printf("Too high! Try again.\n");
+        } else if (guess < target) {
+            printf("Too low! Try again.\n");
+        } else {
+            printf("Congratulations! You guessed the number in %d attempts.\n", attempts);
+        }
+    } while (guess != target);
+
+    return 0;
+}
+Explanation:
+Random Number: The rand() function is used to generate a random number between 1 and 100.
+Game Loop: The user is prompted to keep guessing until they guess the correct number, and feedback is provided based on the guess.
+
+
+
+4. Bank Account System (using Structures)
+This project simulates basic banking operations like checking balance, depositing money, and withdrawing money using structures.
+
+Code:
+#include <stdio.h>
+
+struct Account {
+    int accountNumber;
+    char holderName[50];
+    float balance;
+};
+
+void deposit(struct Account *acc, float amount) {
+    acc->balance += amount;
+    printf("Deposited: %.2f\n", amount);
+}
+
+void withdraw(struct Account *acc, float amount) {
+    if (acc->balance >= amount) {
+        acc->balance -= amount;
+        printf("Withdrawn: %.2f\n", amount);
+    } else {
+        printf("Insufficient balance.\n");
+    }
+}
+
+void display(struct Account acc) {
+    printf("\nAccount Number: %d\n", acc.accountNumber);
+    printf("Account Holder: %s\n", acc.holderName);
+    printf("Current Balance: %.2f\n", acc.balance);
+}
+
+int main() {
+    struct Account account;
+    
+    printf("Enter Account Number: ");
+    scanf("%d", &account.accountNumber);
+    getchar();  // To consume the newline left by scanf
+    printf("Enter Account Holder's Name: ");
+    fgets(account.holderName, sizeof(account.holderName), stdin);
+    account.holderName[strcspn(account.holderName, "\n")] = 0;  // Remove the newline
+    
+    account.balance = 0.0f;  // Initialize balance to 0
+
+    int choice;
+    float amount;
+
+    while (1) {
+        printf("\nBank Account System\n");
+        printf("1. Deposit\n");
+        printf("2. Withdraw\n");
+        printf("3. Display Balance\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter deposit amount: ");
+                scanf("%f", &amount);
+                deposit(&account, amount);
+                break;
+            case 2:
+                printf("Enter withdrawal amount: ");
+                scanf("%f", &amount);
+                withdraw(&account, amount);
+                break;
+            case 3:
+                display(account);
+                break;
+            case 4:
+                printf("Exiting...\n");
+                return 0;
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    }
+
+    return 0;
+}
+Explanation:
+Bank Account: The Account structure holds the account number, holder's name, and balance.
+Functions: The deposit, withdraw, and display functions perform operations on the account.
+Menu: The program provides options to deposit money, withdraw money, or view the balance.
+
+
+
+5. Temperature Converter (Celsius to Fahrenheit and vice versa)
+This project converts temperatures between Celsius and Fahrenheit.
+
+Code:
+
+#include <stdio.h>
+
+void celsiusToFahrenheit(float celsius) {
+    float fahrenheit = (celsius * 9/5) + 32;
+    printf("%.2f Celsius = %.2f Fahrenheit\n", celsius, fahrenheit);
+}
+
+void fahrenheitToCelsius(float fahrenheit) {
+    float celsius = (fahrenheit - 32) * 5/9;
+    printf("%.2f Fahrenheit = %.2f Celsius\n", fahrenheit, celsius);
+}
+
+int main() {
+    int choice;
+    float temp;
+
+    while (1) {
+        printf("\nTemperature Converter\n");
+        printf("1. Celsius to Fahrenheit\n");
+        printf("2. Fahrenheit to Celsius\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 3) {
+            break;
+        }
+
+        printf("Enter the temperature: ");
+        scanf("%f", &temp);
+
+        switch (choice) {
+            case 1:
+                celsiusToFahrenheit(temp);
+                break;
+            case 2:
+                fahrenheitToCelsius(temp);
+                break;
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+
+    return 0;
+}
+Explanation:
+Conversion Functions: Two functions perform the conversion between Celsius and Fahrenheit.
+Menu: The user can select the conversion direction, enter the temperature, and get the converted result.
